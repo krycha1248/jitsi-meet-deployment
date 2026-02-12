@@ -1,0 +1,66 @@
+################################
+# Terraform
+################################
+
+# Terraform cache / providers
+**/.terraform/*
+.terraform*
+
+# Terraform state
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Terraform variable files
+*.tfvars
+*.tfvars.json
+
+# Terraform CLI config
+.terraformrc
+terraform.rc
+
+################################
+# Ansible
+################################
+
+# Retry files
+*.retry
+
+# Vault secrets
+vault.yml
+vault.yaml
+*.vault
+
+################################
+# Secrets / env
+################################
+
+.env
+.env.*
+*.key
+*.pem
+
+*/openrc.sh
+
+################################
+# OS / editors
+################################
+
+.DS_Store
+Thumbs.db
+
+.vscode/
+.idea/
+
+################################
+# Logs
+################################
+
+*.log
+
+################################
+# Misc
+################################
+
+*.bak
+*.tmp
