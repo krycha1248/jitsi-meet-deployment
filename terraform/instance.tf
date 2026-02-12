@@ -30,3 +30,20 @@ module "da_dns_CNAME" {
   record_type  = "CNAME"
   record_value = "${module.da_dns_A.record_name}.${module.da_dns_A.domain}."
 }
+
+resource "ansible_playbook" "jitsi" {
+  name       = module.vm_ovh.ip
+  playbook   = "${path.module}/../ansible/site.yml"
+  replayable = true
+  extra_vars = {
+    jitsi_domain                 = module.da_dns_CNAME.record_value
+    become                       = true
+    ansible_user                 = "debian"
+    ansible_ssh_private_key_file = var.ssh_private_key_file
+    ansible_port                 = 22
+  }
+}
+
+output "ansible_stdout" {
+  value = ansible_playbook.jitsi.ansible_playbook_stdout
+}

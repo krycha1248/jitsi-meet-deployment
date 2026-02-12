@@ -22,3 +22,9 @@ variable "ssh_key" {
   type = string
   sensitive = true
 }
+
+variable "ssh_private_key_file" {
+  type = string
+  sensitive = true
+  default = "~/ssh_klucz"
+}

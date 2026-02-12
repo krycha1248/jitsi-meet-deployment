@@ -1,0 +1,8 @@
+---
+- name: Deploy
+  hosts: all
+  remote_user: root
+  become: true
+  roles:
+    - debian-deploy
+...

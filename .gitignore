@@ -31,6 +31,8 @@ vault.yml
 vault.yaml
 *.vault
 
+.ansible
+
 ################################
 # Secrets / env
 ################################
