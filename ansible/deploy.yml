@@ -3,6 +3,14 @@
   hosts: all
   remote_user: root
   become: true
+  gather_facts: false
+  pre_tasks:
+    - name: Wait for SSH
+      ansible.builtin.wait_for_connection:
+        timeout: 300
+    - name: Get facts
+      ansible.builtin.setup:
   roles:
     - debian-deploy
+    - meet
 ...

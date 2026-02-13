@@ -1,7 +1,7 @@
 module "vm_ovh" {
   source      = "git::https://github.com/krycha1248/terraform-modules.git//vm-ovh?ref=master"
   name        = "Jitsi"
-  image_name  = "Debian 13"
+  image_name  = "Debian 12"
   key_pair    = var.ssh_key
   flavor_name = "d2-2"
 }
@@ -13,7 +13,7 @@ module "da_dns_A" {
   da_pass      = var.da_pass
   da_host      = var.da_host
   domain       = var.da_domain
-  record_name  = "meet"
+  record_name  = var.subdomain
   record_type  = "A"
   record_value = module.vm_ovh.ip
 }
@@ -26,21 +26,25 @@ module "da_dns_CNAME" {
   da_pass      = var.da_pass
   da_host      = var.da_host
   domain       = var.da_domain
-  record_name  = "www.meet"
+  record_name  = "www.${var.subdomain}"
   record_type  = "CNAME"
   record_value = "${module.da_dns_A.record_name}.${module.da_dns_A.domain}."
 }
 
 resource "ansible_playbook" "jitsi" {
   name       = module.vm_ovh.ip
-  playbook   = "${path.module}/../ansible/site.yml"
+  playbook   = "${path.module}/../ansible/deploy.yml"
   replayable = true
   extra_vars = {
-    jitsi_domain                 = module.da_dns_CNAME.record_value
+    domain_name                  = "${module.da_dns_A.record_name}.${var.da_domain}"
     become                       = true
     ansible_user                 = "debian"
     ansible_ssh_private_key_file = var.ssh_private_key_file
     ansible_port                 = 22
+    username                     = var.da_user
+    password                     = var.da_pass
+    meet_cert_mail               = var.mail
+    meet_admin_pass              = var.admin_pass
   }
 }
 

@@ -18,13 +18,28 @@ variable "da_domain" {
   sensitive = true
 }
 
-variable "ssh_key" {
+variable "subdomain" {
   type = string
+  default = "meet"
+}
+
+variable "ssh_key" {
+  type      = string
   sensitive = true
 }
 
 variable "ssh_private_key_file" {
-  type = string
+  type      = string
   sensitive = true
-  default = "~/ssh_klucz"
+  default   = "~/ssh_klucz"
+}
+
+variable "mail" {
+  type      = string
+  sensitive = true
+}
+
+variable "admin_pass" {
+  type      = string
+  sensitive = true
 }
